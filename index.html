@@ -3,605 +3,507 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>תרגול המרת תווים</title>
-    <!-- טעינת Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>תרגול שמות תווים</title>
     <style>
-        /* הגדרת גופן אינטר כברירת מחדל */
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Heebo', sans-serif;
-            background: linear-gradient(135deg, #f0f4f8 0%, #e0e7ee 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        .card {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
         }
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-        .button-primary {
-            transition: all 0.2s ease-in-out;
-        }
-        .button-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.4);
-        }
-        .progress-note {
-            transition: all 0.3s ease-in-out;
-            cursor: default;
-        }
-        .current-note {
-            animation: pulse 1.5s infinite alternate;
-        }
-        @keyframes pulse {
+
+        @keyframes slideIn {
             from {
-                transform: scale(1.05);
-                box-shadow: 0 0 10px rgba(49, 130, 206, 0.7);
+                opacity: 0;
+                transform: translateY(30px);
             }
             to {
-                transform: scale(1.1);
-                box-shadow: 0 0 20px rgba(49, 130, 206, 0.9);
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-        .answer-option {
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
         }
-        .answer-option:hover {
-            background-color: #f0f4f8;
-            transform: translateY(-1px);
+
+        .mode-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        .correct-answer {
-            background-color: #38a169 !important; /* ירוק */
+
+        .mode-btn {
+            padding: 25px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
             font-weight: bold;
         }
-        .error-message {
-            animation: shake 0.5s;
+
+        .mode-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
+
+        .notes-display {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .note-item {
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: #f0f0f0;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .note-item.completed {
+            background: #4ade80;
+            color: white;
+            transform: scale(0.95);
+        }
+
+        .note-item.current {
+            background: #667eea;
+            color: white;
+            transform: scale(1.2);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .answer-btn {
+            padding: 20px;
+            font-size: 1.2em;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            background: white;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+        }
+
+        .answer-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .answer-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .answer-btn:hover .answer-number {
+            background: white;
+            color: #667eea;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            background: #ef4444;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3em;
+            animation: shake 0.5s ease;
+            margin-bottom: 20px;
+        }
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-10px); }
-            40%, 80% { transform: translateX(10px); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .records-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .record-item {
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .record-item.new-record {
+            background: #fbbf24;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-message {
+            background: #4ade80;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            animation: pulse 1s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .btn-secondary {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
+    <div class="container">
+        <!-- דף הבית -->
+        <div id="homePage">
+            <h1>🎵 תרגול שמות תווים 🎵</h1>
+            <div class="mode-selection">
+                <button class="mode-btn" onclick="startQuiz('heb-to-eng')">עברית → אנגלית</button>
+                <button class="mode-btn" onclick="startQuiz('eng-to-heb')">אנגלית → עברית</button>
+                <button class="mode-btn" onclick="startQuiz('mixed')">מעורב</button>
+            </div>
+        </div>
 
-    <div id="app" class="w-full max-w-2xl bg-white card rounded-2xl p-6 md:p-10">
-        <!-- התוכן ייטען כאן באמצעות JavaScript -->
+        <!-- דף התרגיל -->
+        <div id="quizPage" class="hidden">
+            <div class="notes-display" id="notesDisplay"></div>
+            <div id="errorMessage" class="hidden"></div>
+            <div class="answers-container" id="answersContainer"></div>
+            <div class="timer" id="timer">00.00</div>
+        </div>
+
+        <!-- דף השיאים -->
+        <div id="recordsPage" class="hidden">
+            <h1>🏆 שיאים אישיים 🏆</h1>
+            <div id="successMessage" class="hidden"></div>
+            <ul class="records-list" id="recordsList"></ul>
+            <div class="buttons-container">
+                <button class="btn-secondary" onclick="restartQuiz()">תרגיל נוסף</button>
+                <button class="btn-secondary" onclick="goHome()">חזרה לדף הבית</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // הגדרות בסיסיות
-        const NOTES = [
-            { hebrew: 'דו', english: 'C' },
-            { hebrew: 'רה', english: 'D' },
-            { hebrew: 'מי', english: 'E' },
-            { hebrew: 'פה', english: 'F' },
-            { hebrew: 'סול', english: 'G' },
-            { hebrew: 'לה', english: 'A' },
-            { hebrew: 'סי', english: 'B' },
-        ];
-        const QUIZ_LENGTH = 10;
-        const HIGH_SCORES_KEY = 'noteConversionHighScores';
-        const ERROR_TIMEOUT_MS = 2000;
-
-        // משתני מצב
-        let appState = {
-            view: 'home', // 'home', 'quiz', 'scores'
-            mode: null,   // 'hebrew-english', 'english-hebrew', 'mixed'
-            quizData: [],
-            currentQuestionIndex: 0,
-            startTime: null,
-            timerInterval: null,
-            elapsedTime: 0,
-            userId: 'user-001', // מזהה משתמש קבוע לצורך הדגמה
-            isHandlingInput: false // למניעת כפל קליקים/הקשות בזמן בדיקה
+        const notes = {
+            hebrew: ['דו', 'רה', 'מי', 'פה', 'סול', 'לה', 'סי'],
+            english: ['C', 'D', 'E', 'F', 'G', 'A', 'B']
         };
 
-        const appContainer = document.getElementById('app');
+        let currentMode = '';
+        let quizNotes = [];
+        let currentIndex = 0;
+        let startTime = 0;
+        let timerInterval = null;
 
-        // --- כלי עזר ---
-
-        /**
-         * טעינת השיאים השמורים מ-localStorage
-         * @returns {Array<Object>} רשימת השיאים ממוינת
-         */
-        function loadHighScores() {
-            try {
-                const scores = JSON.parse(localStorage.getItem(HIGH_SCORES_KEY)) || [];
-                // ודא שהשיאים ממוינים תמיד מהמהיר לאיטי
-                return scores.sort((a, b) => a.time - b.time).slice(0, 5);
-            } catch (e) {
-                console.error("שגיאה בטעינת השיאים מ-localStorage:", e);
-                return [];
-            }
+        function startQuiz(mode) {
+            currentMode = mode;
+            currentIndex = 0;
+            generateQuiz();
+            
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('quizPage').classList.remove('hidden');
+            document.getElementById('recordsPage').classList.add('hidden');
+            
+            startTime = Date.now();
+            startTimer();
+            displayQuestion();
         }
 
-        /**
-         * שמירת השיא הנוכחי אם הוא נכנס לטופ 5
-         * @param {number} time - הזמן שנמדד בשניות
-         * @returns {boolean} האם הושג שיא חדש (נכנס לטופ 5)
-         */
-        function saveHighScore(time) {
-            const scores = loadHighScores();
-            const newScore = {
-                id: crypto.randomUUID(),
-                time: time,
-                date: new Date().toISOString(),
-                mode: appState.mode,
-            };
-
-            if (scores.length < 5 || time < scores[scores.length - 1].time) {
-                scores.push(newScore);
-                const updatedScores = scores.sort((a, b) => a.time - b.time).slice(0, 5);
-                localStorage.setItem(HIGH_SCORES_KEY, JSON.stringify(updatedScores));
-                return true;
-            }
-            return false;
-        }
-        
-        /**
-         * פורמט זמן s.ms
-         * @param {number} totalSeconds - הזמן הכולל בשניות
-         * @returns {string} מחרוזת זמן בפורמט s.ms
-         */
-        function formatTime(totalSeconds) {
-            const seconds = Math.floor(totalSeconds);
-            const milliseconds = Math.round((totalSeconds - seconds) * 1000);
-            return `${seconds}.${String(milliseconds).padStart(3, '0')} שניות`;
-        }
-
-        /**
-         * בחירת איבר אקראי ממערך
-         * @param {Array<any>} arr - המערך
-         * @returns {any} איבר אקראי
-         */
-        function getRandomElement(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        // --- לוגיקת המבחן ---
-
-        /**
-         * יצירת מערך שאלות חדש עבור מצב נתון
-         */
-        function generateQuizData() {
-            appState.quizData = [];
-            const availableNotes = [...NOTES]; // העתק של מערך התווים
-            const totalQuestions = Math.min(QUIZ_LENGTH, availableNotes.length);
-
-            // בחירת התווים לשאלות באופן אקראי וללא חזרות
-            const selectedNotes = [];
-            while (selectedNotes.length < totalQuestions) {
-                const randomIndex = Math.floor(Math.random() * availableNotes.length);
-                selectedNotes.push(availableNotes.splice(randomIndex, 1)[0]);
-            }
-
-            selectedNotes.forEach(correctNote => {
-                let source, targetKey, targetValue;
-
-                // קביעת כיוון השאלה
-                let isHebrewToEnglish;
-                if (appState.mode === 'hebrew-english') {
-                    isHebrewToEnglish = true;
-                } else if (appState.mode === 'english-hebrew') {
-                    isHebrewToEnglish = false;
-                } else { // 'mixed'
-                    isHebrewToEnglish = Math.random() < 0.5;
-                }
-
-                if (isHebrewToEnglish) {
-                    source = correctNote.hebrew;
-                    targetKey = 'english';
-                    targetValue = correctNote.english;
-                } else {
-                    source = correctNote.english;
-                    targetKey = 'hebrew';
-                    targetValue = correctNote.hebrew;
-                }
-
-                // יצירת תשובות פוטנציאליות
-                let options = [{ value: targetValue, isCorrect: true }];
-
-                // בחירת 2 תשובות שגויות
-                const allPossibleIncorrect = NOTES
-                    .filter(n => n[targetKey] !== targetValue)
-                    .map(n => n[targetKey]);
+        function generateQuiz() {
+            quizNotes = [];
+            for (let i = 0; i < 10; i++) {
+                const randomIndex = Math.floor(Math.random() * 7);
+                let questionLang, answerLang;
                 
-                // שימוש ב-Set כדי להבטיח אקראיות וללא כפילויות
-                const incorrectOptions = new Set();
-                while (incorrectOptions.size < 2 && allPossibleIncorrect.length > 0) {
-                    const randomIndex = Math.floor(Math.random() * allPossibleIncorrect.length);
-                    incorrectOptions.add(allPossibleIncorrect.splice(randomIndex, 1)[0]);
+                if (currentMode === 'mixed') {
+                    questionLang = Math.random() < 0.5 ? 'hebrew' : 'english';
+                    answerLang = questionLang === 'hebrew' ? 'english' : 'hebrew';
+                } else if (currentMode === 'heb-to-eng') {
+                    questionLang = 'hebrew';
+                    answerLang = 'english';
+                } else {
+                    questionLang = 'english';
+                    answerLang = 'hebrew';
                 }
-
-                incorrectOptions.forEach(val => options.push({ value: val, isCorrect: false }));
-
-                // ערבוב התשובות
-                options.sort(() => Math.random() - 0.5);
-
-                appState.quizData.push({
-                    source: source,
-                    targetValue: targetValue,
-                    targetKey: targetKey,
-                    options: options,
-                    isCorrect: false
+                
+                quizNotes.push({
+                    question: notes[questionLang][randomIndex],
+                    answer: notes[answerLang][randomIndex],
+                    questionLang: questionLang,
+                    answerLang: answerLang,
+                    correctIndex: randomIndex
                 });
+            }
+        }
+
+        function displayQuestion() {
+            const notesDisplay = document.getElementById('notesDisplay');
+            notesDisplay.innerHTML = '';
+            
+            quizNotes.forEach((note, index) => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'note-item';
+                if (index < currentIndex) {
+                    noteItem.classList.add('completed');
+                } else if (index === currentIndex) {
+                    noteItem.classList.add('current');
+                }
+                noteItem.textContent = note.question;
+                notesDisplay.appendChild(noteItem);
+            });
+
+            displayAnswers();
+        }
+
+        function displayAnswers() {
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+            
+            const currentNote = quizNotes[currentIndex];
+            const answers = generateAnswers(currentNote);
+            
+            answers.forEach((answer, index) => {
+                const answerBtn = document.createElement('button');
+                answerBtn.className = 'answer-btn';
+                answerBtn.innerHTML = `
+                    <span class="answer-number">${index + 1}</span>
+                    <span>${answer.text}</span>
+                `;
+                answerBtn.onclick = () => checkAnswer(answer.isCorrect);
+                answersContainer.appendChild(answerBtn);
             });
         }
 
-        /**
-         * אתחול המבחן
-         * @param {string} mode - מצב המבחן שנבחר
-         */
-        function startQuiz(mode) {
-            appState.mode = mode;
-            appState.currentQuestionIndex = 0;
-            appState.isHandlingInput = false;
-            generateQuizData();
-            appState.startTime = performance.now();
-            startTimer();
-            appState.view = 'quiz';
-            renderApp();
+        function generateAnswers(currentNote) {
+            const answerLang = currentNote.answerLang;
+            const correctIndex = currentNote.correctIndex;
             
-            // הוספת האזנה למקשים רק בדף המבחן
-            document.addEventListener('keydown', handleKeyPress);
-        }
-
-        /**
-         * מעבר לשאלה הבאה
-         */
-        function goToNextQuestion() {
-            if (appState.currentQuestionIndex < QUIZ_LENGTH - 1) {
-                appState.currentQuestionIndex++;
-                renderApp();
-            } else {
-                completeQuiz();
+            let wrongIndices = [];
+            while (wrongIndices.length < 2) {
+                const randomIndex = Math.floor(Math.random() * 7);
+                if (randomIndex !== correctIndex && !wrongIndices.includes(randomIndex)) {
+                    wrongIndices.push(randomIndex);
+                }
             }
-        }
-
-        /**
-         * סיום המבחן
-         */
-        function completeQuiz() {
-            stopTimer();
-            document.removeEventListener('keydown', handleKeyPress);
-            const endTime = performance.now();
-            appState.elapsedTime = (endTime - appState.startTime) / 1000;
-            appState.isNewHighScore = saveHighScore(appState.elapsedTime);
-            appState.view = 'scores';
-            renderApp();
-        }
-
-        /**
-         * בדיקת תשובה שנבחרה
-         * @param {string} selectedValue - הערך שנבחר
-         */
-        function checkAnswer(selectedValue) {
-            if (appState.isHandlingInput) return;
-            appState.isHandlingInput = true;
-
-            const currentQuestion = appState.quizData[appState.currentQuestionIndex];
-            const isCorrect = selectedValue === currentQuestion.targetValue;
             
-            const optionsContainer = document.getElementById('options-container');
+            const answers = [
+                { text: notes[answerLang][correctIndex], isCorrect: true },
+                { text: notes[answerLang][wrongIndices[0]], isCorrect: false },
+                { text: notes[answerLang][wrongIndices[1]], isCorrect: false }
+            ];
+            
+            return answers.sort(() => Math.random() - 0.5);
+        }
 
+        function checkAnswer(isCorrect) {
             if (isCorrect) {
-                // סימון ירוק והמשך
-                currentQuestion.isCorrect = true;
-                const selectedElement = optionsContainer.querySelector(`[data-value="${selectedValue}"]`);
-                if (selectedElement) {
-                    selectedElement.classList.remove('bg-white', 'hover:bg-gray-100');
-                    selectedElement.classList.add('bg-green-500', 'text-white');
-                }
-                
-                setTimeout(() => {
-                    appState.isHandlingInput = false;
-                    goToNextQuestion();
-                }, 300);
-
-            } else {
-                // סימון אדום והודעת שגיאה
-                const selectedElement = optionsContainer.querySelector(`[data-value="${selectedValue}"]`);
-                const correctElement = optionsContainer.querySelector(`[data-value="${currentQuestion.targetValue}"]`);
-                
-                if (selectedElement) {
-                    selectedElement.classList.add('bg-red-500', 'text-white', 'error-message');
-                }
-                if (correctElement) {
-                    correctElement.classList.add('bg-green-500', 'text-white');
-                }
-                
-                const messageElement = document.getElementById('quiz-message');
-                if (messageElement) {
-                    messageElement.textContent = 'טעות, מתחילים מהתחלה...';
-                    messageElement.classList.remove('text-gray-600', 'opacity-0');
-                    messageElement.classList.add('text-red-600', 'font-bold');
-                }
-
-                stopTimer();
-                
-                // איפוס והתחלה מחדש לאחר השהייה
-                setTimeout(() => {
-                    appState.isHandlingInput = false;
-                    startQuiz(appState.mode); // מתחיל מחדש באותו מצב
-                }, ERROR_TIMEOUT_MS);
-            }
-        }
-
-        /**
-         * טיפול בקליטות מקלדת 1, 2, 3
-         * @param {KeyboardEvent} event 
-         */
-        function handleKeyPress(event) {
-            if (appState.view !== 'quiz' || appState.isHandlingInput) return;
-            
-            let selectedOptionIndex = -1;
-            if (event.key === '1') selectedOptionIndex = 0;
-            else if (event.key === '2') selectedOptionIndex = 1;
-            else if (event.key === '3') selectedOptionIndex = 2;
-
-            if (selectedOptionIndex !== -1) {
-                const currentQuestion = appState.quizData[appState.currentQuestionIndex];
-                if (currentQuestion.options[selectedOptionIndex]) {
-                    checkAnswer(currentQuestion.options[selectedOptionIndex].value);
-                }
-            }
-        }
-        
-        // --- לוגיקת טיימר ---
-
-        /**
-         * הפעלת טיימר
-         */
-        function startTimer() {
-            if (appState.timerInterval) clearInterval(appState.timerInterval);
-            
-            const timerElement = document.getElementById('timer-display');
-            if (!timerElement) return;
-
-            // עדכון הטיימר כל 50ms (לצורך הצגת מילישניות)
-            appState.timerInterval = setInterval(() => {
-                const elapsed = (performance.now() - appState.startTime) / 1000;
-                appState.elapsedTime = elapsed;
-                if (timerElement) {
-                     timerElement.textContent = `זמן: ${formatTime(elapsed)}`;
-                }
-            }, 50);
-        }
-
-        /**
-         * עצירת טיימר
-         */
-        function stopTimer() {
-            if (appState.timerInterval) {
-                clearInterval(appState.timerInterval);
-                appState.timerInterval = null;
-            }
-        }
-
-
-        // --- רכיבי הצגה (Rendering) ---
-
-        /**
-         * הצגת דף הבית (בחירת מצב)
-         */
-        function renderHome() {
-            appContainer.innerHTML = `
-                <h1 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">תרגול המרת תווים</h1>
-                <p class="text-gray-600 mb-8 text-center">בחר את כיוון התרגול:</p>
-                <div class="space-y-4">
-                    <button onclick="startQuiz('hebrew-english')" class="button-primary w-full p-4 text-lg font-bold bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-600 transition duration-150 ease-in-out transform hover:scale-[1.01]">
-                        עברי (דו, רה, מי) ← אנגלי (C, D, E)
-                    </button>
-                    <button onclick="startQuiz('english-hebrew')" class="button-primary w-full p-4 text-lg font-bold bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-600 transition duration-150 ease-in-out transform hover:scale-[1.01]">
-                        אנגלי (C, D, E) ← עברי (דו, רה, מי)
-                    </button>
-                    <button onclick="startQuiz('mixed')" class="button-primary w-full p-4 text-lg font-bold bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-600 transition duration-150 ease-in-out transform hover:scale-[1.01]">
-                        שניהם (מעורב)
-                    </button>
-                </div>
-            `;
-        }
-
-        /**
-         * הצגת דף המבחן
-         */
-        function renderQuiz() {
-            const currentQuestion = appState.quizData[appState.currentQuestionIndex];
-
-            // 1. רכיב מציג התווים (Progress Tracker)
-            const notesProgressHtml = appState.quizData.map((q, index) => {
-                let classes = 'progress-note w-1/10 flex-shrink-0 mx-0.5 p-2 rounded-lg text-center font-bold border border-gray-300 transition-all duration-300 ease-in-out';
-                
-                if (index === appState.currentQuestionIndex) {
-                    classes += ' bg-blue-100 text-blue-800 text-xl current-note shadow-lg';
-                } else if (q.isCorrect) {
-                    classes += ' bg-green-500 text-white opacity-70';
+                currentIndex++;
+                if (currentIndex < 10) {
+                    displayQuestion();
                 } else {
-                    classes += ' bg-gray-100 text-gray-700 text-sm opacity-50';
+                    finishQuiz();
                 }
-
-                return `<div class="${classes}" style="width: calc(100% / ${QUIZ_LENGTH} - 4px);">${q.source}</div>`;
-            }).join('');
-
-
-            // 2. כותרת השאלה
-            const targetLanguage = currentQuestion.targetKey === 'english' ? 'אנגלית' : 'עברית';
-            const sourceLanguage = currentQuestion.targetKey === 'english' ? 'עברית' : 'אנגלית';
-            const questionTitle = `איך אומרים את התו <span class="text-blue-600 font-extrabold text-4xl">${currentQuestion.source}</span> ב${targetLanguage}?`;
-            
-            // 3. רכיב אפשרויות התשובה
-            const optionsHtml = currentQuestion.options.map((option, index) => {
-                // הוספת סימון המקש לכל תשובה
-                const keyLabel = index + 1;
-                return `
-                    <div id="option-${index}" data-value="${option.value}" onclick="checkAnswer('${option.value}')" class="answer-option w-full p-4 bg-white rounded-xl shadow-md text-center text-xl font-semibold border-2 border-gray-200 hover:border-blue-400 transition duration-150 ease-in-out flex items-center justify-start">
-                        <span class="ml-4 p-2 bg-gray-200 rounded-full font-bold text-gray-700 text-sm w-8 h-8 flex items-center justify-center">${keyLabel}</span>
-                        <span>${option.value}</span>
-                    </div>
-                `;
-            }).join('');
-
-
-            appContainer.innerHTML = `
-                <!-- טיימר -->
-                <div id="timer-display" class="text-center text-2xl font-mono text-gray-700 mb-6">זמן: 0.000 שניות</div>
-                
-                <!-- רצועת התקדמות -->
-                <div class="flex flex-row-reverse justify-between items-center bg-gray-200 p-2 rounded-xl mb-8 overflow-hidden shadow-inner">
-                    ${notesProgressHtml}
-                </div>
-
-                <!-- תוכן השאלה -->
-                <div class="text-center mb-10 p-6 bg-blue-50 rounded-xl border border-blue-200">
-                    <p class="text-lg text-gray-700 mb-4">שאלה ${appState.currentQuestionIndex + 1} מתוך ${QUIZ_LENGTH}</p>
-                    <p class="text-2xl font-semibold text-gray-800">${questionTitle}</p>
-                </div>
-                
-                <!-- הודעות מערכת -->
-                <div id="quiz-message" class="text-center text-xl h-8 mb-6 text-gray-600 opacity-0 transition-opacity"></div>
-
-                <!-- אפשרויות תשובה -->
-                <div id="options-container" class="space-y-4">
-                    ${optionsHtml}
-                </div>
-                
-                <p class="text-center text-sm text-gray-500 mt-6">ניתן להקיש על מקשים 1, 2, או 3 לבחירה מהירה.</p>
-            `;
-            // הפעלת הטיימר מחדש במידה ולא פעיל (למשל לאחר שגיאה)
-            if (!appState.timerInterval) startTimer();
-        }
-
-        /**
-         * הצגת דף השיאים
-         */
-        function renderHighScores() {
-            const scores = loadHighScores();
-            const currentModeName = {
-                'hebrew-english': 'עברי ← אנגלי',
-                'english-hebrew': 'אנגלי ← עברי',
-                'mixed': 'מעורב'
-            }[appState.mode] || 'לא ידוע';
-
-            // טבלת השיאים
-            let scoresHtml = '';
-            if (scores.length > 0) {
-                 scoresHtml = scores.map((score, index) => {
-                    // סימון השיא הנוכחי בהדגשה
-                    const isCurrentScore = score.id === appState.isNewHighScore ? 'bg-yellow-100 font-bold' : 'bg-white';
-                    
-                    // פורמט תאריך נקי
-                    const date = new Date(score.date).toLocaleDateString('he-IL', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-
-                    return `
-                        <tr class="${isCurrentScore} border-b border-gray-100">
-                            <td class="px-6 py-3 whitespace-nowrap text-lg text-gray-900">${index + 1}.</td>
-                            <td class="px-6 py-3 whitespace-nowrap text-lg text-blue-600 font-mono">${formatTime(score.time)}</td>
-                            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">${currentModeName}</td>
-                            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">${date}</td>
-                        </tr>
-                    `;
-                }).join('');
             } else {
-                scoresHtml = `<tr><td colspan="4" class="py-4 text-center text-gray-500">עדיין אין שיאים שמורים...</td></tr>`;
+                showError();
+            }
+        }
+
+        function showError() {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = 'טעות, מתחילים מהתחלה';
+            errorDiv.className = 'error-message';
+            
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+                currentIndex = 0;
+                generateQuiz();
+                startTime = Date.now();
+                displayQuestion();
+            }, 2000);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = (Date.now() - startTime) / 1000;
+                const seconds = Math.floor(elapsed);
+                const ms = Math.floor((elapsed - seconds) * 100);
+                document.getElementById('timer').textContent = 
+                    `${seconds.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
+            }, 10);
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            const finalTime = (Date.now() - startTime) / 1000;
+            saveRecord(finalTime);
+            showRecords(finalTime);
+        }
+
+        function saveRecord(time) {
+            const records = JSON.parse(localStorage.getItem(`records_${currentMode}`) || '[]');
+            records.push({
+                time: time,
+                date: new Date().toLocaleDateString('he-IL')
+            });
+            records.sort((a, b) => a.time - b.time);
+            const topRecords = records.slice(0, 5);
+            localStorage.setItem(`records_${currentMode}`, JSON.stringify(topRecords));
+        }
+
+        function showRecords(currentTime) {
+            document.getElementById('quizPage').classList.add('hidden');
+            document.getElementById('recordsPage').classList.remove('hidden');
+            
+            const records = JSON.parse(localStorage.getItem(`records_${currentMode}`) || '[]');
+            const recordsList = document.getElementById('recordsList');
+            recordsList.innerHTML = '';
+            
+            const isNewRecord = records.some(r => Math.abs(r.time - currentTime) < 0.01);
+            
+            if (isNewRecord) {
+                const successMsg = document.getElementById('successMessage');
+                successMsg.textContent = '🎉 שיא חדש! כל הכבוד! 🎉';
+                successMsg.className = 'success-message';
             }
             
-            // הודעה על שיא אישי
-            let achievementMessage = '';
-            if (appState.isNewHighScore) {
-                achievementMessage = `
-                    <div class="bg-yellow-100 border-r-4 border-yellow-500 text-yellow-800 p-4 rounded-lg mb-6 shadow-md" role="alert">
-                        <p class="font-bold text-xl">🎉 שיא חדש! 🎉</p>
-                        <p class="text-lg">התוצאה שלך נכנסה לחמישייה הפותחת!</p>
-                    </div>
-                `;
-            }
-
-            appContainer.innerHTML = `
-                <h1 class="text-3xl font-extrabold text-gray-800 mb-2 text-center">מבחן הושלם!</h1>
-                <p class="text-4xl font-extrabold text-blue-600 mb-6 text-center">זמן סיום: ${formatTime(appState.elapsedTime)}</p>
-                
-                ${achievementMessage}
-
-                <h2 class="text-2xl font-bold text-gray-700 mt-8 mb-4 border-b pb-2">לוח השיאים (טופ 5)</h2>
-                
-                <div class="overflow-x-auto bg-gray-50 rounded-xl shadow-inner">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-200">
-                            <tr>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">מקום</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">זמן</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">מצב</th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">תאריך</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            ${scoresHtml}
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- כפתורי ניווט -->
-                <div class="mt-8 space-y-4 md:space-y-0 md:flex md:space-x-4 md:space-x-reverse">
-                    <button onclick="startQuiz(appState.mode)" class="button-primary flex-1 p-4 text-lg font-bold bg-green-500 text-white rounded-xl shadow-md hover:bg-green-600 transition duration-150 ease-in-out transform hover:scale-[1.01]">
-                        חזרה למבחן (התחלה חדשה)
-                    </button>
-                    <button onclick="changeView('home')" class="button-primary flex-1 p-4 text-lg font-bold bg-gray-500 text-white rounded-xl shadow-md hover:bg-gray-600 transition duration-150 ease-in-out transform hover:scale-[1.01]">
-                        חזור לדף הבית
-                    </button>
-                </div>
-            `;
-        }
-
-        /**
-         * שינוי תצוגה
-         * @param {string} view - שם התצוגה ('home', 'quiz', 'scores')
-         */
-        function changeView(view) {
-            appState.view = view;
-            if (view !== 'quiz') {
-                 stopTimer();
-                 document.removeEventListener('keydown', handleKeyPress);
-            }
-            renderApp();
-        }
-
-        /**
-         * הפונקציה הראשית לרינדור האפליקציה
-         */
-        function renderApp() {
-            if (appState.view === 'home') {
-                renderHome();
-            } else if (appState.view === 'quiz') {
-                renderQuiz();
-            } else if (appState.view === 'scores') {
-                renderHighScores();
+            if (records.length === 0) {
+                recordsList.innerHTML = '<li class="record-item">אין עדיין שיאים</li>';
+            } else {
+                records.forEach((record, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'record-item';
+                    if (Math.abs(record.time - currentTime) < 0.01) {
+                        li.classList.add('new-record');
+                    }
+                    const seconds = Math.floor(record.time);
+                    const ms = Math.floor((record.time - seconds) * 100);
+                    li.innerHTML = `
+                        <span>#${index + 1}</span>
+                        <span>${seconds}.${ms.toString().padStart(2, '0')} שניות</span>
+                        <span>${record.date}</span>
+                    `;
+                    recordsList.appendChild(li);
+                });
             }
         }
 
-        // --- אתחול ---
+        function restartQuiz() {
+            startQuiz(currentMode);
+        }
 
-        // חשיפת פונקציות גלובליות לשימוש ב-onclick
-        window.startQuiz = startQuiz;
-        window.checkAnswer = checkAnswer;
-        window.changeView = changeView;
+        function goHome() {
+            document.getElementById('recordsPage').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
 
-        // אתחול ראשוני - טען דף הבית
-        document.addEventListener('DOMContentLoaded', () => {
-            renderApp();
+        // מקשי קיצור
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('quizPage').classList.contains('hidden')) return;
+            
+            if (e.key === '1' || e.key === '2' || e.key === '3') {
+                const buttons = document.querySelectorAll('.answer-btn');
+                const index = parseInt(e.key) - 1;
+                if (buttons[index]) {
+                    buttons[index].click();
+                }
+            }
         });
-
     </script>
 </body>
 </html>
